@@ -1,0 +1,25 @@
+{
+  "name": "nexxt-python-typescript-interfaces",
+  "version": "0.0.8",
+  "description": "Nexxt common interfaces and classes",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexxt-intelligence/inca-interfaces.git"
+  },
+  "author": "Nexxt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nexxt-intelligence/inca-interfaces/issues"
+  },
+  "homepage": "https://github.com/nexxt-intelligence/inca-interfaces#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
