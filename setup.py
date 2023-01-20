@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='inca_interfaces',
-    version='0.0',
+    version='0.0.3',
     license='MIT',
     author="Inca",
     author_email='mike@nexxt.in',
