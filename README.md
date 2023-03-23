@@ -1,23 +1,31 @@
-## Installation 
+## Installation
+
 ```
-npm i nexxt-python-typescript-interfaces
+npm i conversational-data-structures
 ```
 
 ## Usage
+
 ```
-import { NA_DEFAULT_TEXT } from 'nexxt-python-typescript-interfaces';
+import { NA_DEFAULT_TEXT } from 'conversational-data-structures';
 ```
 
 ## Deployment / Publish
+
 Log into NPM
+
 ```
 npm login
 ```
+
 Build the package
+
 ```
 npm run build
 ```
+
 Publish
+
 ```
 npm publish
 ```

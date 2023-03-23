@@ -1,20 +1,8 @@
-export class OpinionAnalysis {
-  sentiment: number;
-  datc: any;
-  // dummy constructor
-  constructor() {}
-}
-
-export class TranslationAnalysis {
-  english_text: string;
-  mt_alignments: any[];
-  model_name: string;
-  // dummy constructor
-  constructor() {}
-}
+export type Language = string; // TODO
+export type FragmentId = string;
 
 export enum ResearchDomain {
-  TODO = "todo",
+  GENERAL = "general",
 }
 
 export enum ExchangePrimacy {
@@ -53,246 +41,210 @@ export enum PolarityType {
   AMB = "ambiguous",
 }
 
-export class ConversationalBase {
-  /* Base for all data structures at the single respondent level. */
-  id: string | number;
-  respondent_id: string;
-  hitl: boolean;
-  // dummy constructor
-  constructor() {}
+export enum HighlightType {
+  FRAGMENT = "fragment",
+  DIALOGUE = "dialogue",
 }
 
-export class ConversationalTarget {
-  todo: string;
-  // dummy constructor
-  constructor() {}
+export interface OpinionAnalysis {
+  sentiment: number;
+  datc: any;
 }
 
-export class ChunkAnalysis {
-  data: any;
-  model_name: string;
-  // dummy constructor
-  constructor() {}
-}
-
-export class ResponseUtteranceChunk {
+export interface TranslationAnalysis {
   english_text: string;
+  mt_alignments: any[];
+  model_name: string;
+}
+
+export interface UtteranceFragment {
   source_text: string;
-  source_lang: string;
-  analysis: ChunkAnalysis;
-  // dummy constructor
-  constructor() {}
+  source_lang: Language;
 }
 
-export class ResponseUtteranceAnalysis {
-  polarity: string;
-  utterance_chunks: ResponseUtteranceChunk[];
-  // dummy constructor
-  constructor() {}
-}
-
-export class ResearchMetadata {
-  objective: string;
-  domain: ResearchDomain;
-  category: ResearchCategory;
-  // dummy constructor
-  constructor() {}
-}
-
-export class DialogueMetadata {
-  subject: string;
-  // dummy constructor
-  constructor() {}
-}
-
-export class UtteranceFragment {
-  source_text: string;
-  source_lang: string;
+export interface UtteranceFragment_BaseAnalytics extends UtteranceFragment {
   translation?: TranslationAnalysis;
 }
 
-export class ResponseUtteranceFragment {
-  respondent_id: string;
-  response_id: string;
-  analysis: OpinionAnalysis;
-
-  constructor(UtteranceFragment: UtteranceFragment) {}
+export interface DialogueUtterance extends UtteranceFragment {
+  // audio?: string;
+  // video?: string;
+  // image?: string;
+  // primacy?: ExchangePrimacy
 }
 
-export class OpinionFragment {
-  /*
-    A part of an opinion, whether stated verbatim or synthesized.
-    OpinionFragments always correspond to a particular respondent_id and
-    dialogue_id, but may or may not correspond to a particular exchange_id.
-    */
+export interface DialogueUtterance_BaseAnalytics
+  extends UtteranceFragment_BaseAnalytics,
+    DialogueUtterance {
+  translation: TranslationAnalysis;
+}
+
+export interface Fragment extends UtteranceFragment_BaseAnalytics {
   respondent_id: number;
   exchange_id?: string;
   dialogue_id: string;
   analysis: OpinionAnalysis;
-
-  constructor(UtteranceFragment: UtteranceFragment) {}
+  fragment_id: FragmentId;
+  start: number;
+  end: number;
 }
 
-export class DialogueUtterance {
-  /*
-   A single utterance within a dialogue, and its analysis.
-    */
-  audio?: string;
-  video?: string;
-  image?: string;
-  primacy: ExchangePrimacy; // could be replaced with `depth: int`?
-  // analysis: UtteranceAnalysis
-  constructor(UtteranceFragment: UtteranceFragment) {}
-}
+export interface QuestionUtterance extends DialogueUtterance {}
 
-export class ExchangeAnalysis {
+export interface QuestionUtterance_BaseAnalytics extends QuestionUtterance {}
+
+export interface ExchangeAnalysis {
   demerit: ResponseDemerit;
   model_name: string;
-  // dummy constructor
-  constructor() {}
+  generated_probe?: string[];
+  human_evaluation?: number;
 }
 
-export class QuestionUtterance {
-  /*
-  A question posed by the interviewer.
-    */
-  // pass?
-}
-
-export class ResponseUtterance {
-  /* 
-    An utterance given by a respondent in response to a question.
-    */
-  fragments: OpinionFragment[];
-  // analysis: ResponseUtteranceAnalysis
-  constructor(
-    DialogueUtterance: DialogueUtterance,
-    ResponseUtteranceFragment: ResponseUtteranceFragment
-  ) {}
-}
-
-export class DialogueExchange {
-  /* 
-    A single exchange between interviewer and respondent, consisting of the uttered question
-    and the uttered response, along with analysis thereof.
-    */
-  question: QuestionUtterance;
-  utterance: ResponseUtterance;
-  analysis: ExchangeAnalysis;
-  respondent_id: number;
-  exchange_id: string;
-  // dummy constructor
-  constructor() {}
-}
-
-export class DialogueSynthesis {
-  synthesis: string;
-  fragments: OpinionFragment[];
+export interface DialogueSynthesis {
+  source_text: string;
+  source_lang: Language;
+  fragments: Fragment[];
   model_name: string;
   dialogue_id: string;
-
-  // dummy constructor
-  constructor() {}
+  translation: TranslationAnalysis;
+  analysis: OpinionAnalysis;
 }
 
-export class DialogueAnalysis {
-  demerit_points: number;
+export interface Highlight {
+  highlight_id: string;
+  highlight_type: HighlightType;
+  start?: number;
+  end?: number;
+}
+
+export interface ResponseUtterance extends DialogueUtterance {
+  respondent_id: string;
+  response_id: string;
+}
+
+export interface ResponseUtterance_BaseAnalytics extends ResponseUtterance {
+  analysis: OpinionAnalysis;
+  fragments: Fragment[];
+}
+
+export interface DialogueExchange {
+  question_utterance: QuestionUtterance;
+  response_utterance: ResponseUtterance;
+  respondent_id: number;
+  exchange_id: string;
+  metadata: { [key: string]: string };
+}
+
+export interface DialogueExchange_RealTimeAnalytics extends DialogueExchange {
+  analysis: ExchangeAnalysis;
+}
+
+export interface DialogueExchange_BaseAnalytics extends DialogueExchange {
+  question_utterance: QuestionUtterance;
+  response_utterance: ResponseUtterance_BaseAnalytics;
+}
+
+export interface DialogueAnalysis {
   synthesis: DialogueSynthesis;
   model_name: string;
   dialogue_id: string;
-
-  // dummy constructor
-  constructor() {}
 }
 
-export class Dialogue {
-  /* 
-    A set of exchanges between interviewer and a particular respondent.
-    */
-  referenced_exchanges: DialogueExchange[];
+export interface DemeritAnalysis {
+  demerit_points: number;
+  demerit_rationale: string;
+  model_name: string;
+}
+
+export interface DialogueMetadata {
+  subject: string;
+}
+export interface Dialogue_Raw {
+  // referenced_exchanges: DialogueExchange[]
   exchanges: DialogueExchange[];
-  respondent_id: number;
+  respondent_id: string;
   dialogue_id: string;
+  lang_id: Language;
+}
+
+export interface Dialogue_RealTimeAnalytics extends Dialogue_Raw {
+  exchanges: DialogueExchange_RealTimeAnalytics[];
+  demerit: DemeritAnalysis;
+}
+
+export interface Dialogue_BaseAnalytics extends Dialogue_Raw {
+  exchanges: DialogueExchange_BaseAnalytics[];
   analysis: DialogueAnalysis;
-
-  // dummy constructor
-  constructor() {}
 }
 
-export class QuestionMetadata {
-  category: QuestionCategory;
-  text_template: string;
-  question_id: number;
-  referenced_question_ids: number[];
+export type Dialogue =
+  | Dialogue_Raw
+  | Dialogue_RealTimeAnalytics
+  | Dialogue_BaseAnalytics;
 
-  // dummy constructor
-  constructor() {}
-}
-
-export class DialogueSetAnalysisGroup {
-  members: OpinionFragment[];
-  // members: List[Union[ResponseUtteranceChunk, DialogueExchange]]
+export interface DialogueSetAnalysisGroup {
+  members: Highlight[];
   label: string;
   hitl: boolean;
   model_name: string;
-
-  // dummy constructor
-  constructor() {}
+  analysis_group_id: string;
 }
 
-export class DialogueSetAnalysis {
+export interface DialogueSetAnalysis {
   themes: DialogueSetAnalysisGroup[];
   keywords: DialogueSetAnalysisGroup[];
   summary?: string;
   tags?: DialogueSetAnalysisGroup[];
-
-  // dummy constructor
-  constructor() {}
 }
 
-export class DialogueSet {
-  /*
-    All of the data corresponding to a single prime question.
-    Consists of a set of Dialogues, one per respondent, with a shared prime_question_metadata.
-    */
-  // type: DialogueType
+export interface QuestionMetadata {
+  category: QuestionCategory;
+  text_template: string;
+  question_id: number;
+  referenced_question_ids: number[];
+}
+
+export interface DialogueSet_Raw {
   metadata: DialogueMetadata;
-  // prime_question: DialogueQuestion
-  dialogues: Dialogue[];
-  analysis: DialogueSetAnalysis;
+  dialogues: Dialogue_Raw[];
   prime_question_metadata: QuestionMetadata;
-  // utterance: DialogueUtterance
-
-  // dummy constructor
-  constructor() {}
 }
 
-export class ResearchAnalysis {
-  todo: string;
+export interface DialogueSet_RealTimeAnalytics extends DialogueSet_Raw {
+  dialogues: Dialogue_RealTimeAnalytics[];
+}
+
+export interface DialogueSet_BaseAnalytics {
+  metedata: DialogueMetadata;
+  dialogues: Dialogue_BaseAnalytics[];
+  prime_question_metadata: QuestionMetadata;
+}
+
+export interface DialogueSet_AggregateAnalytics {
+  metadata: DialogueMetadata;
+  dialogues: Dialogue_BaseAnalytics;
+  prime_question_metadata: QuestionMetadata;
+  analysis: DialogueSetAnalysis;
+}
+
+export type DialogueSet =
+  | DialogueSet_Raw
+  | DialogueSet_BaseAnalytics
+  | DialogueSet_AggregateAnalytics;
+
+export interface ResearchMetadata {
+  objective: string;
+  domain: ResearchDomain;
+  category: ResearchCategory;
+}
+
+export interface ResearchAnalysis {
   model_name: string;
-
-  // dummy constructor
-  constructor() {}
 }
 
-export class OpinionGraph {
-  // dummy constructor
-  constructor() {}
-}
-
-export class ResearchConversationSet {
-  /* 
-    A research conversation between an interviewer and a respondent.
-    Attributes:
-        metadata (ResearchMetadata): TODO
-    */
-
+export interface ResearchConversationSet {
   metadata: ResearchMetadata;
   dialogue_sets: DialogueSet[];
-  opinion_graph_set: OpinionGraph[];
-  targets: ConversationalTarget[];
   analysis: ResearchAnalysis;
-
-  // dummy constructor
-  constructor() {}
+  // targets: ConversationalTarget[];
 }

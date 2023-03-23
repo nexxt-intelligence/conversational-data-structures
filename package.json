@@ -1,7 +1,8 @@
 {
-  "name": "nexxt-python-typescript-interfaces",
-  "version": "0.0.8",
-  "description": "Nexxt common interfaces and classes",
+  "name": "conversational-data-structures",
+  "version": "0.9.0",
+  "description": "Conversational Data Structures for Market Research Analysis used by inca",
+  "author": "Nexxt Intelligence",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -11,14 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nexxt-intelligence/inca-interfaces.git"
+    "url": "git+https://github.com/nexxt-intelligence/conversational-data-structures.git"
   },
-  "author": "Nexxt",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nexxt-intelligence/inca-interfaces/issues"
+    "url": "https://github.com/nexxt-intelligence/conversational-data-structures/issues"
   },
-  "homepage": "https://github.com/nexxt-intelligence/inca-interfaces#readme",
+  "homepage": "https://github.com/nexxt-intelligence/conversational-data-structures#readme",
   "devDependencies": {
     "typescript": "^4.9.4"
   }
