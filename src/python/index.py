@@ -21,6 +21,7 @@ class ExchangePrimacy(Enum):
 class ResponseDemerit(Enum):
     UNINFORMATIVE = "uninformative"
     NONRESPONSIVE = "nonresponsive"
+    NONE = "none"
 
 
 class ResearchCategory(Enum):

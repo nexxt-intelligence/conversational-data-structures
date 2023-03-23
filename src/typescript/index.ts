@@ -13,6 +13,7 @@ export enum ExchangePrimacy {
 export enum ResponseDemerit {
   UNINFORMATIVE = "uninformative",
   NONRESPONSIVE = "nonresponsive",
+  NONE = "none",
 }
 
 export enum ResearchCategory {
