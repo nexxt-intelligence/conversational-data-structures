@@ -18,10 +18,11 @@ class ExchangePrimacy(Enum):
     PROBE = "probe"
 
 
-class ResponseDemerit(Enum):
-    UNINFORMATIVE = "uninformative"
-    NONRESPONSIVE = "nonresponsive"
-    NONE = "none"
+class ExchangeDemeritCheck(Enum):
+  GIBBERISH = "GIBBERISH"
+  UNINFORMATIVE = "UNINFORMATIVE"
+  DUPLICATE = "DUPLICATE"
+  DEMERIT_AI = "DEMERIT_AI"
 
 
 class ResearchCategory(Enum):
@@ -119,7 +120,9 @@ class QuestionUtterance_BaseAnalytics(DialogueUtterance_BaseAnalytics):
 
 @dataclass
 class ExchangeAnalysis:
-    demerit: ResponseDemerit
+    demerit_checks_enabled: List[ExchangeDemeritCheck]
+    demerit_checks_flagged: List[ExchangeDemeritCheck]
+    detected_target_ids: List[str]
     model_name: str
     generated_probes: Optional[List[str]]
     human_evaluation: Optional[int]
@@ -214,6 +217,8 @@ class Dialogue_Raw:
 class Dialogue_RealTimeAnalytics(Dialogue_Raw):
     exchanges: List[DialogueExchange_RealTimeAnalytics]
     demerit: DemeritAnalysis
+    detected_target_ids: List[str]
+
 
 
 @dataclass

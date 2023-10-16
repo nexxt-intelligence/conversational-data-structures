@@ -10,10 +10,11 @@ export enum ExchangePrimacy {
   PROBE = "probe",
 }
 
-export enum ResponseDemerit {
-  UNINFORMATIVE = "uninformative",
-  NONRESPONSIVE = "nonresponsive",
-  NONE = "none",
+export declare enum ExchangeDemeritCheck {
+  GIBBERISH = "GIBBERISH",
+  UNINFORMATIVE = "UNINFORMATIVE",
+  DUPLICATE = "DUPLICATE",
+  DEMERIT_AI = "DEMERIT_AI",
 }
 
 export enum ResearchCategory {
@@ -95,7 +96,9 @@ export interface QuestionUtterance extends DialogueUtterance {}
 export interface QuestionUtterance_BaseAnalytics extends QuestionUtterance {}
 
 export interface ExchangeAnalysis {
-  demerit: ResponseDemerit;
+  demerit_checks_enabled: ExchangeDemeritCheck[];
+  demerit_checks_flagged: ExchangeDemeritCheck[];
+  detected_target_ids: string[];
   model_name: string;
   generated_probe?: string[];
   human_evaluation?: number;
@@ -171,6 +174,7 @@ export interface Dialogue_Raw {
 export interface Dialogue_RealTimeAnalytics extends Dialogue_Raw {
   exchanges: DialogueExchange_RealTimeAnalytics[];
   demerit: DemeritAnalysis;
+  detected_target_ids: string[];
 }
 
 export interface Dialogue_BaseAnalytics extends Dialogue_Raw {
