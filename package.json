@@ -1,6 +1,6 @@
 {
   "name": "conversational-data-structures",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Conversational Data Structures for Market Research Analysis used by inca",
   "author": "Nexxt Intelligence",
   "main": "lib/index.js",
