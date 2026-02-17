@@ -212,12 +212,17 @@ class Dialogue_Raw:
     dialogue_id: str
     lang_id: str
 
+@dataclass
+class DetectedTargetMetadata:
+    id: str
+    label: str
 
 @dataclass
 class Dialogue_RealTimeAnalytics(Dialogue_Raw):
     exchanges: List[DialogueExchange_RealTimeAnalytics]
     demerit: DemeritAnalysis
     detected_target_ids: List[str]
+    detected_targets_metadata: Optional[List[DetectedTargetMetadata]]
 
 
 

@@ -2,50 +2,50 @@ export type Language = string; // TODO
 export type FragmentId = string;
 
 export enum ResearchDomain {
-  GENERAL = "general",
+  GENERAL = 'general'
 }
 
 export enum ExchangePrimacy {
-  PRIME = "prime",
-  PROBE = "probe",
+  PRIME = 'prime',
+  PROBE = 'probe'
 }
 
 export declare enum ExchangeDemeritCheck {
-  GIBBERISH = "GIBBERISH",
-  UNINFORMATIVE = "UNINFORMATIVE",
-  DUPLICATE = "DUPLICATE",
-  DEMERIT_AI = "DEMERIT_AI",
+  GIBBERISH = 'GIBBERISH',
+  UNINFORMATIVE = 'UNINFORMATIVE',
+  DUPLICATE = 'DUPLICATE',
+  DEMERIT_AI = 'DEMERIT_AI'
 }
 
 export enum ResearchCategory {
-  CX = "customer_experience",
-  UA = "usage_and_attitude",
-  AD = "ad_or_offer",
-  BR = "branding",
+  CX = 'customer_experience',
+  UA = 'usage_and_attitude',
+  AD = 'ad_or_offer',
+  BR = 'branding'
 }
 
 export enum QuestionCategory {
-  SFA = "spontaneous_free_association(s)",
-  EXA = "example(s)",
-  EXP = "explanation(s)",
-  MSG = "key_message(s)",
-  EMO = "emotional reaction(s)",
-  INT = "interpretation(s)",
-  SUG = "suggestion(s)",
-  CAT = "categorical",
-  CMP = "comparative",
-  GEN = "generic",
+  SFA = 'spontaneous_free_association(s)',
+  EXA = 'example(s)',
+  EXP = 'explanation(s)',
+  MSG = 'key_message(s)',
+  EMO = 'emotional reaction(s)',
+  INT = 'interpretation(s)',
+  SUG = 'suggestion(s)',
+  CAT = 'categorical',
+  CMP = 'comparative',
+  GEN = 'generic'
 }
 
 export enum PolarityType {
-  POS = "positive",
-  NEG = "negative",
-  AMB = "ambiguous",
+  POS = 'positive',
+  NEG = 'negative',
+  AMB = 'ambiguous'
 }
 
 export enum HighlightType {
-  FRAGMENT = "fragment",
-  DIALOGUE = "dialogue",
+  FRAGMENT = 'fragment',
+  DIALOGUE = 'dialogue'
 }
 
 export interface OpinionAnalysis {
@@ -76,8 +76,7 @@ export interface DialogueUtterance extends UtteranceFragment {
 }
 
 export interface DialogueUtterance_BaseAnalytics
-  extends UtteranceFragment_BaseAnalytics,
-    DialogueUtterance {
+  extends UtteranceFragment_BaseAnalytics, DialogueUtterance {
   translation: TranslationAnalysis;
 }
 
@@ -175,6 +174,7 @@ export interface Dialogue_RealTimeAnalytics extends Dialogue_Raw {
   exchanges: DialogueExchange_RealTimeAnalytics[];
   demerit: DemeritAnalysis;
   detected_target_ids: string[];
+  detected_targets_metadata?: { id: string; label: string }[];
 }
 
 export interface Dialogue_BaseAnalytics extends Dialogue_Raw {
