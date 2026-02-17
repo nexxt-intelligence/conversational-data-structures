@@ -67,6 +67,10 @@ class TranslationAnalysis:
     mt_alignments: List[Any]
     model_name: str
 
+@dataclass
+class DetectedTargetMetadata:
+    id: str
+    label: str
 
 @dataclass
 class UtteranceFragment:
@@ -123,6 +127,7 @@ class ExchangeAnalysis:
     demerit_checks_enabled: List[ExchangeDemeritCheck]
     demerit_checks_flagged: List[ExchangeDemeritCheck]
     detected_target_ids: List[str]
+    detected_targets_metadata: Optional[List[DetectedTargetMetadata]]
     model_name: str
     generated_probes: Optional[List[str]]
     human_evaluation: Optional[int]
@@ -212,10 +217,7 @@ class Dialogue_Raw:
     dialogue_id: str
     lang_id: str
 
-@dataclass
-class DetectedTargetMetadata:
-    id: str
-    label: str
+
 
 @dataclass
 class Dialogue_RealTimeAnalytics(Dialogue_Raw):

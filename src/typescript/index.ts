@@ -98,6 +98,7 @@ export interface ExchangeAnalysis {
   demerit_checks_enabled: ExchangeDemeritCheck[];
   demerit_checks_flagged: ExchangeDemeritCheck[];
   detected_target_ids: string[];
+  detected_targets_metadata?: { id: string; label: string }[];
   model_name: string;
   generated_probe?: string[];
   human_evaluation?: number;
